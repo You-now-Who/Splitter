@@ -4,7 +4,7 @@
     "description": "A chrome extension to help split vocals from music in real time.",
     "version": "1.0",
     "action": {
-      "default_popup": "popup.html",
-      "default_icon": "logo_sm.png"
+      "default_popup": "popup/popup.html",
+      "default_icon": "images/logo_sm.png"
     }
   }
