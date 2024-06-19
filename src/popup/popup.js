@@ -1,1 +1,6 @@
-console.log("Hello from the popup script!")
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('start').addEventListener('click', () => {
+      chrome.runtime.sendMessage({action: 'start'});
+    });
+  });
+  
