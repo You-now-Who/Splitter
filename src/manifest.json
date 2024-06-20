@@ -3,11 +3,12 @@
   "name": "Splitter",
   "description": "A chrome extension to help split vocals from music in real time.",
   "version": "1.0",
-  "permissions": ["tabCapture", "activeTab", "offscreen"],
+  "permissions": ["tabCapture", "activeTab", "scripting", "offscreen"],
   "background": {
-    "service_worker": "service-worker.js"
+    "service_worker": "background.js"
   },
   "action": {
+    "default_popup": "popup/popup.html",
     "default_icon": "images/logo_sm.png"
   }
 }
