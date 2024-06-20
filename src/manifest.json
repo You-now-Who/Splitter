@@ -5,7 +5,7 @@
   "version": "1.0",
   "permissions": ["tabCapture", "activeTab", "scripting", "offscreen"],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "service-worker.js"
   },
   "action": {
     "default_popup": "popup/popup.html",
