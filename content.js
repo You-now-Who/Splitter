@@ -1,5 +1,3 @@
-import * as tf from '@tensorflow/tfjs';
-
 // Check if the script has already been injected
 if (!window.twitchVocalFilterInitialized) {
     window.twitchVocalFilterInitialized = true;
@@ -69,5 +67,25 @@ if (!window.twitchVocalFilterInitialized) {
   
     // Start observing the Twitch player
     observeTwitchPlayer();
+
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        if (message.action === 'enableVocalIsolation') {
+          console.log('Vocal Isolation Enabled!');
+          
+          // Perform your vocal isolation logic here
+          enableVocalIsolation();
+      
+          sendResponse({ status: 'success' });
+        }
+      });
+      
+      // Function that handles the vocal isolation logic
+      function enableVocalIsolation() {
+        console.log('Performing vocal isolation...');
+        // Add your vocal isolation logic (e.g., using the Web Audio API)
+      }
+      
+
   }
+  
   
