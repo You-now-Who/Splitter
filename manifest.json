@@ -1,22 +1,21 @@
 {
-    "manifest_version": 3,
-    "name": "Twitch Vocal Filter",
-    "version": "1.0",
-    "permissions": [
-      "activeTab",
-      "scripting"
-    ],
-    "action": {
-      "default_popup": "popup.html"
-    },
-    "background": {
-      "service_worker": "background.js"
-    },
-    "content_scripts": [
-      {
-        "matches": ["*://*.twitch.tv/*"],
-        "js": ["content.js"]
-      }
-    ]
-  }
-  
+  "manifest_version": 3,
+  "name": "Twitch 5-Band Equalizer",
+  "version": "1.0",
+  "description": "Adjust Twitch audio with a 5-band equalizer.",
+  "permissions": ["activeTab", "scripting", "tabs"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "host_permissions": ["https://*.twitch.tv/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.twitch.tv/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

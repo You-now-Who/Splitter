@@ -1,27 +1,29 @@
-document.getElementById('enable').addEventListener('click', () => {
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🔄 Popup loaded');
+
+  const enableButton = document.getElementById('enable');
+  const disableButton = document.getElementById('disable');
+
+  enableButton.addEventListener('click', () => {
+    console.log('🟢 Enable button clicked');
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      // Check if content.js is ready by executing a simple script in the page
-      chrome.scripting.executeScript({
-        target: { tabId: tabs[0].id },
-        func: checkContentScriptReady
-      }, (result) => {
-        if (result && result[0].result) {
-          // Content script is ready, now send the message to enable vocal isolation
-          chrome.runtime.sendMessage({ action: 'enableVocalIsolation' }, (response) => {
-            console.log(response.status);  // Should log 'success' if content script handled the action
-            alert('Vocal Isolation Enabled!');
+      chrome.scripting.executeScript(
+        { target: { tabId: tabs[0].id }, files: ['content.js'] },
+        () => {
+          chrome.tabs.sendMessage(tabs[0].id, { action: 'enableVocalIsolation' }, (response) => {
+            console.log(response?.status === 'enabled' ? '✅ Vocal Isolation Enabled' : '❌ Failed to enable');
           });
-        } else {
-          console.error('Content script is not ready.');
-          alert('Content script is not ready.');
         }
+      );
+    });
+  });
+
+  disableButton.addEventListener('click', () => {
+    console.log('🔴 Disable button clicked');
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, { action: 'disableVocalIsolation' }, (response) => {
+        console.log(response?.status === 'disabled' ? '❌ Vocal Isolation Disabled' : '❌ Failed to disable');
       });
     });
   });
-  
-  // Function to check if content.js is injected and ready
-  function checkContentScriptReady() {
-    // We return a boolean indicating whether the content script is ready
-    return typeof chrome.runtime.onMessage !== 'undefined';
-  }
-  
+});
